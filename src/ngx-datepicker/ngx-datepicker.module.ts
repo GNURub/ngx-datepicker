@@ -4,12 +4,14 @@ import { FormsModule } from '@angular/forms';
 
 import { SlimScrollModule } from 'ng2-slimscroll';
 
-import { DatePickerComponent } from './ng2-datepicker.component';
-export { DatePickerOptions, DateModel } from './ng2-datepicker.component';
+import { NgxDatePickerComponent } from './ngx-datepicker.component';
+import {NgxFormatPipe} from "./ngx-format.pipe";
+export { NgxDatePickerOptions, DateModel } from './ngx-datepicker.component';
 
 @NgModule({
   declarations: [
-    DatePickerComponent
+    NgxDatePickerComponent,
+    NgxFormatPipe
   ],
   imports: [
     CommonModule,
@@ -17,7 +19,7 @@ export { DatePickerOptions, DateModel } from './ng2-datepicker.component';
     SlimScrollModule
   ],
   exports: [
-    DatePickerComponent,
+    NgxDatePickerComponent,
     SlimScrollModule,
     FormsModule
   ]

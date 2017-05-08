@@ -1,6 +1,6 @@
 import { Ng2DatepickerCliPage } from './app.po';
 
-describe('ng2-datepicker-cli App', () => {
+describe('ngx-datepicker-cli App', () => {
   let page: Ng2DatepickerCliPage;
 
   beforeEach(() => {

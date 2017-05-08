@@ -1,13 +1,13 @@
 {
-  "name": "ng2-datepicker",
-  "version": "1.8.3",
+  "name": "ngx-datepicker",
+  "version": "1.0.0",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --watch",
     "build": "npm run css && ./node_modules/.bin/ngc -p tsconfig.build.json && rollup -c",
     "build:cli": "ng build --aot",
-    "build:lib": "nglb --rootDir src/ng2-datepicker --outDir lib-dist",
+    "build:lib": "nglb --rootDir src/ngx-datepicker --outDir lib-dist",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
@@ -17,7 +17,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jkuri/ng2-datepicker.git"
+    "url": "https://github.com/GNURub/ngx-datepicker.git"
   },
   "keywords": [
     "angular",
@@ -30,14 +30,14 @@
     "date",
     "component"
   ],
-  "author": "Jan Kuri <jkuri88@gmail.com>",
+  "author": "Ruben Cid <rubencidlara@gmail.com>",
   "bugs": {
-    "url": "https://github.com/jkuri/ng2-datepicker/issues"
+    "url": "https://github.com/GNURub/ngx-datepicker/issues"
   },
-  "homepage": "https://github.com/jkuri/ng2-datepicker#readme",
-  "main": "./lib-dist/ng2-datepicker.module.js",
-  "module": "./lib-dist/ng2-datepicker.module.js",
-  "types": "./lib-dist/ng2-datepicker.module.d.ts",
+  "homepage": "https://github.com/GNURub/ngx-datepicker#readme",
+  "main": "./lib-dist/ngx-datepicker.module.js",
+  "module": "./lib-dist/ngx-datepicker.module.js",
+  "types": "./lib-dist/ngx-datepicker.module.d.ts",
   "peerDependencies": {
     "@angular/common": ">=2.0.0 <5.0.0 || >=4.0.0-beta <5.0.0",
     "@angular/core": ">=2.0.0 <5.0.0 || >=4.0.0-beta <5.0.0",
@@ -46,6 +46,7 @@
     "zone.js": ">=0.7.0"
   },
   "dependencies": {
+    "date-fns": "^1.28.4",
     "moment": "^2.17.1",
     "ng2-slimscroll": "^1.2.6"
   },

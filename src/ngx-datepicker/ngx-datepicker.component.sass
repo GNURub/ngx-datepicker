@@ -54,13 +54,23 @@ $red: #fa5252
   .datepicker-calendar
     +unselectable
     width: 250px
-    top: 40px
+    top: 30px
     position: absolute
     z-index: 99
-    background: $white
+    background: $gray-dark
     border-bottom-left-radius: 4px
     border-bottom-right-radius: 4px
     box-shadow: 0 2px 5px rgba($black, 0.5)
+
+    .arrow
+      position: absolute
+      display: block
+      min-width: 15px
+      min-height: 15px
+      top: -6px
+      left: 60px
+      transform: rotate(45deg)
+      transition: left 0.5s
 
     .datepicker-calendar-top
       width: 100%
@@ -78,9 +88,9 @@ $red: #fa5252
 
       button
         width: 200px
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        white-space: nowrap
+        overflow: hidden
+        text-overflow: ellipsis
         display: block
         margin: 0 auto
         color: $white
@@ -201,6 +211,29 @@ $red: #fa5252
             border: 1px solid #366AAB
             border-radius: 4px
 
+
+      .datepicker-calendar-months-container
+        width: 100%
+        height: auto
+
+        .month
+          display: flex
+          justify-content: center
+          align-items: center
+          float: left
+          font-size: 14px
+          color: #8E8E8E
+          width: calc(100% / 4)
+          height: 50px
+          text-align: center
+          border-radius: 50%
+          cursor: pointer
+          &:hover, &.selected
+            background: #222628
+            border: 1px solid #366AAB
+            border-radius: 4px
+
+
       .datepicker-buttons
         width: 235px
         display: flex
@@ -218,8 +251,6 @@ $red: #fa5252
           cursor: pointer
           text-align: center
           padding: 5px 10px
-          border: 1px solid #366AAB
-          border-radius: 4px
 
           &.u-is-primary
             background: #366AAB

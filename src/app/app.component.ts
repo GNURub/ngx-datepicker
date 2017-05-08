@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { DateModel, DatePickerOptions } from '../ng2-datepicker/ng2-datepicker.component';
+import { DateModel, NgxDatePickerOptions } from '../ngx-datepicker/ngx-datepicker.component';
 
 @Component({
   selector: 'app-root',
@@ -8,9 +8,11 @@ import { DateModel, DatePickerOptions } from '../ng2-datepicker/ng2-datepicker.c
 })
 export class AppComponent {
   date: DateModel;
-  options: DatePickerOptions;
+  options: NgxDatePickerOptions;
 
   constructor() {
-    this.options = new DatePickerOptions();
+    this.options = new NgxDatePickerOptions({
+      view: 'month'
+    });
   }
 }

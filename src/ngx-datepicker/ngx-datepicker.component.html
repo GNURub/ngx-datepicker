@@ -1,6 +1,6 @@
 <div class="datepicker-container u-is-unselectable">
   <div class="datepicker-input-container">
-    <input type="text" class="datepicker-input" [(ngModel)]="date.formatted">
+    <input type="text" class="datepicker-input" (click)="toggle()" [(ngModel)]="date.formatted">
     <div class="datepicker-input-icon" (click)="toggle()">
       <i>
         <svg width="58px" height="58px" viewBox="0 0 58 58" version="1.1">
@@ -40,9 +40,10 @@
     </div>
   </div>
   <div class="datepicker-calendar" *ngIf="opened">
-    <div class="datepicker-calendar-top">
-      <span class="year-title">{{ currentDate.format('YYYY') }}</span>
-      <button type="button" (click)="openYearPicker()" *ngIf="!yearPicker">
+    <div class="arrow" [ngStyle]="{background: (options.multiView || view == 'year') ? 'black' : '#222628'}"></div>
+    <div *ngIf="options.multiView || view == 'year'" class="datepicker-calendar-top">
+      <span class="year-title">{{ currentDate | ngxFormat:'YYYY' }}</span>
+      <button type="button" (click)="openYearPicker()" *ngIf="view != 'year'">
         {{options.selectYearText}}
       </button>
       <i class="close" (click)="close()">
@@ -54,7 +55,7 @@
       </i>
     </div>
     <div class="datepicker-calendar-container">
-      <div *ngIf="!yearPicker">
+      <div *ngIf="view == 'day'">
         <div class="datepicker-calendar-month-section">
           <i (click)="prevMonth()">
             <svg width="190px" height="306px" viewBox="58 0 190 306" version="1.1">
@@ -65,7 +66,7 @@
               </g>
             </svg>
           </i>
-          <span class="month-title">{{ currentDate.format('MMMM') }}</span>
+          <a class="month-title" (click)="openMonthPicker()" href="javascript:void(0);">{{ currentDate | ngxFormat:'MMMM' }}</a>
           <i (click)="nextMonth()">
             <svg width="190px" height="306px" viewBox="58 0 190 306" version="1.1">
               <g id="keyboard-right-arrow-button" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(58.000000, 0.000000)">
@@ -87,7 +88,7 @@
         </div>
         <div class="datepicker-calendar-days-container">
           <span class="day" *ngFor="let d of days; let i = index"
-                            (click)="selectDate($event, d.momentObj)"
+                            (click)="selectDate($event, d.date)"
                             [ngClass]="{ 'disabled': !d.enabled, 'today': d.today, 'selected': d.selected }">
             {{ d.day }}
           </span>
@@ -97,7 +98,14 @@
           <button type="button" class="a-button u-is-primary u-is-small" (click)="today()">{{options.todayText}}</button>
         </div>
       </div>
-      <div *ngIf="yearPicker">
+      <div *ngIf="view == 'month'">
+        <div class="datepicker-calendar-months-container">
+          <span class="month" *ngFor="let m of months; let i = index" (click)="selectMonth($event, i)">
+            {{ m }}
+          </span>
+        </div>
+      </div>
+      <div *ngIf="view == 'year'">
         <div class="datepicker-calendar-years-container" slimScroll [options]="scrollOptions">
           <span class="year" *ngFor="let y of years; let i = index" (click)="selectYear($event, y)">
             {{ y }}
