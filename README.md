@@ -5,9 +5,9 @@ Angular2 Datepicker Component
 
 ## Demo
 
-[http://ngx-datepicker.jankuri.com](http://ngx-datepicker.jankuri.com)
+[https://gnurub.github.io/ngx-datepicker/](https://gnurub.github.io/ngx-datepicker/)
 
-Looking for a date range picker? Check this one: [http://ng-daterangepicker.jankuri.com](http://ng-daterangepicker.jankuri.com)
+Looking for a date range picker? Check this one: [https://gnurub.github.io/ngx-daterangepicker/](https://gnurub.github.io/ngx-daterangepicker/)
 
 ## Installation:
 
