@@ -102,9 +102,9 @@ export const CALENDAR_VALUE_ACCESSOR: any = {
 };
 
 @Component({
-  selector: 'ngx-datepicker',
-  templateUrl: './ngx-datepicker.component.html',
-  styleUrls: ['./ngx-datepicker.component.sass'],
+  selector: 'ngx-date-picker',
+  templateUrl: './ngx-date-picker.component.html',
+  styleUrls: ['./ngx-date-picker.component.sass'],
   providers: [CALENDAR_VALUE_ACCESSOR],
 })
 export class NgxDatePickerComponent implements ControlValueAccessor, OnInit {

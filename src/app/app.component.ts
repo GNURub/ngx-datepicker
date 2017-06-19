@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { DateModel, NgxDatePickerOptions } from '../ngx-datepicker/ngx-datepicker.component';
+import { DateModel, NgxDatePickerOptions } from '../ngx-date-picker/ngx-date-picker.component';
 
 @Component({
   selector: 'app-root',
