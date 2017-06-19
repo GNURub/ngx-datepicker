@@ -6,7 +6,7 @@ import {
   forwardRef,
   Input,
   Output,
-  EventEmitter,
+  EventEmitter, ViewChild, ViewEncapsulation,
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { SlimScrollOptions } from 'ng2-slimscroll';
@@ -106,8 +106,11 @@ export const CALENDAR_VALUE_ACCESSOR: any = {
   templateUrl: './ngx-date-picker.component.html',
   styleUrls: ['./ngx-date-picker.component.sass'],
   providers: [CALENDAR_VALUE_ACCESSOR],
+  encapsulation: ViewEncapsulation.None
 })
 export class NgxDatePickerComponent implements ControlValueAccessor, OnInit {
+  @Input() inputStyle: Object;
+  @Input() iconClass: string;
   @Input() options: NgxDatePickerOptions;
   @Input() inputEvents: EventEmitter<{ type: string, data: string | DateModel }>;
   @Output() outputEvents: EventEmitter<{ type: string, data: string | DateModel }>;
@@ -173,6 +176,7 @@ export class NgxDatePickerComponent implements ControlValueAccessor, OnInit {
   }
 
   ngOnInit() {
+
     this.options = new NgxDatePickerOptions(this.options);
     this.scrollOptions = {
       barBackground: '#C9C9C9',
