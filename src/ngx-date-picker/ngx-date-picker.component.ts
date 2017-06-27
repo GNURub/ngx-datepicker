@@ -6,7 +6,7 @@ import {
   forwardRef,
   Input,
   Output,
-  EventEmitter, ViewChild, ViewEncapsulation,
+  EventEmitter, ViewEncapsulation,
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { SlimScrollOptions } from 'ng2-slimscroll';
@@ -49,8 +49,7 @@ export interface IDatePickerOptions {
   selectYearText?: string;
   todayText?: string;
   clearText?: string;
-  view?: 'day' | 'month' | 'year';
-  multiView?: boolean;
+  views?: Array<'day'| 'month'| 'year'>;
 }
 
 export class NgxDatePickerOptions {
@@ -65,8 +64,7 @@ export class NgxDatePickerOptions {
   selectYearText?: string;
   todayText?: string;
   clearText?: string;
-  view?: 'day' | 'month' | 'year';
-  multiView?: boolean;
+  views?: Array<'day'| 'month'| 'year'> = [];
 
   constructor(obj?: IDatePickerOptions) {
     this.autoApply = !!(obj && obj.autoApply === true);
@@ -80,8 +78,7 @@ export class NgxDatePickerOptions {
     this.selectYearText = obj && obj.selectYearText ? obj.selectYearText : 'Select Year';
     this.todayText = obj && obj.todayText ? obj.todayText : 'Today';
     this.clearText = obj && obj.clearText ? obj.clearText : 'Clear';
-    this.view = obj && obj.view ? obj.view : 'day';
-    this.multiView = obj && typeof(obj.multiView) === "boolean"  ? obj.multiView : true;
+    this.views = obj && obj.views && Array.isArray(obj.views) && obj.views.length > 0 ? obj.views : ['day', 'month', 'year'];
   }
 }
 
@@ -111,6 +108,7 @@ export const CALENDAR_VALUE_ACCESSOR: any = {
 export class NgxDatePickerComponent implements ControlValueAccessor, OnInit {
   @Input() inputStyle: Object;
   @Input() iconClass: string;
+  @Input() placeholder: string = '';
   @Input() options: NgxDatePickerOptions;
   @Input() inputEvents: EventEmitter<{ type: string, data: string | DateModel }>;
   @Output() outputEvents: EventEmitter<{ type: string, data: string | DateModel }>;
@@ -202,9 +200,7 @@ export class NgxDatePickerComponent implements ControlValueAccessor, OnInit {
       this.maxDate = null;
     }
 
-    if (this.options.view) {
-      this.view = this.options.view;
-    }
+    this.view = this.options.views[0];
 
     this.generateYears();
     this.generateMonths();
@@ -316,6 +312,13 @@ export class NgxDatePickerComponent implements ControlValueAccessor, OnInit {
         formatted:  dateFns.format(date, this.options.format),
         date
       };
+      this.currentDate = date;
+
+      if (this.options.views.length > 1) {
+        this.view = this.options.views[(this.options.views.indexOf('day') + 1 ) % this.options.views.length];
+      } else {
+        this.opened = false;
+      }
 
       this.generateCalendar();
 
@@ -339,8 +342,8 @@ export class NgxDatePickerComponent implements ControlValueAccessor, OnInit {
       };
       this.currentDate = date;
 
-      if (this.options.multiView) {
-        this.view = 'day';
+      if (this.options.views.length > 1 && 'month' !== this.options.views[this.options.views.length - 1]) {
+        this.view = this.options.views[(this.options.views.indexOf('month') + 1 ) % this.options.views.length];
       } else {
         this.opened = false;
       }
@@ -363,8 +366,8 @@ export class NgxDatePickerComponent implements ControlValueAccessor, OnInit {
       };
       this.currentDate = date;
 
-      if (this.options.multiView) {
-        this.view = 'month';
+      if (this.options.views.length > 1 && 'year' !== this.options.views[this.options.views.length - 1]) {
+        this.view = this.options.views[(this.options.views.indexOf('year') + 1 ) % this.options.views.length];
       } else {
         this.opened = false;
       }
@@ -440,16 +443,16 @@ export class NgxDatePickerComponent implements ControlValueAccessor, OnInit {
   }
 
   onOpen() {
-    this.view = this.options.view;
+    this.view = this.options.views[0];
   }
 
   openYearPicker() {
-    if (!this.options.multiView) return;
+    if (!('year' in this.options.views)) return;
     setTimeout(() => this.view = 'year');
   }
 
   openMonthPicker() {
-    if (!this.options.multiView) return;
+    if (!('month' in this.options.views)) return;
     setTimeout(() => this.view = 'month');
   }
 
@@ -457,5 +460,4 @@ export class NgxDatePickerComponent implements ControlValueAccessor, OnInit {
     this.value = { day: null, month: null, year: null, date: null, formatted: null };
     this.close();
   }
-
 }

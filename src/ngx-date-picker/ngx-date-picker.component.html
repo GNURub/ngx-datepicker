@@ -1,13 +1,13 @@
 <div class="datepicker-container u-is-unselectable">
   <div class="datepicker-input-container">
-    <input type="text" class="datepicker-input" [ngStyle]="inputStyle" (click)="toggle()" [(ngModel)]="date.formatted">
+    <input type="text" class="datepicker-input" [placeholder]="placeholder" [ngStyle]="inputStyle" (click)="toggle()" [(ngModel)]="date.formatted">
     <div *ngIf="iconClass" class="datepicker-input-icon" (click)="toggle()">
       <i [class]="iconClass"></i>
     </div>
   </div>
   <div class="datepicker-calendar" *ngIf="opened">
-    <div class="arrow" [ngStyle]="{background: (options.multiView || view == 'year') ? 'black' : '#222628'}"></div>
-    <div *ngIf="options.multiView || view == 'year'" class="datepicker-calendar-top">
+    <div class="arrow" [ngStyle]="{background: (view == 'year') ? 'black' : '#222628'}"></div>
+    <div *ngIf="view == 'year'" class="datepicker-calendar-top">
       <span class="year-title">{{ currentDate | ngxFormat:'YYYY' }}</span>
       <button type="button" (click)="openYearPicker()" *ngIf="view != 'year'">
         {{options.selectYearText}}
