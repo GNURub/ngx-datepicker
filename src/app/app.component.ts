@@ -12,7 +12,8 @@ export class AppComponent {
 
   constructor() {
     this.options = new NgxDatePickerOptions({
-      views: ['month', 'year', 'day']
+      views: ['month', 'year'],
+      formatDisplay: 'MM/YYYY'
     });
   }
 }

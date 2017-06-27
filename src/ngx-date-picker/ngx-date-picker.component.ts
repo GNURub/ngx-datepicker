@@ -18,6 +18,7 @@ export interface IDateModel {
   month: string;
   year: string;
   formatted: string;
+  formattedToDisplay: string;
   date: Date;
 }
 
@@ -27,12 +28,14 @@ export class DateModel {
   year: string;
   date: Date;
   formatted: string;
+  formattedToDisplay: string;
 
   constructor(obj?: IDateModel) {
     this.day = obj && obj.day ? obj.day : null;
     this.month = obj && obj.month ? obj.month : null;
     this.year = obj && obj.year ? obj.year : null;
     this.formatted = obj && obj.formatted ? obj.formatted : null;
+    this.formattedToDisplay = obj && obj.formattedToDisplay ? obj.formattedToDisplay : this.formatted;
     this.date = obj && obj.date ? obj.date : null;
   }
 }
@@ -45,7 +48,8 @@ export interface IDatePickerOptions {
   maxDate?: Date;
   initialDate?: Date;
   firstWeekdaySunday?: boolean;
-  format?: string;
+  formatOut?: string;
+  formatDisplay?: string;
   selectYearText?: string;
   todayText?: string;
   clearText?: string;
@@ -60,7 +64,8 @@ export class NgxDatePickerOptions {
   maxDate?: Date;
   initialDate?: Date;
   firstWeekdaySunday?: boolean;
-  format?: string;
+  formatOut?: string;
+  formatDisplay?: string;
   selectYearText?: string;
   todayText?: string;
   clearText?: string;
@@ -74,7 +79,8 @@ export class NgxDatePickerOptions {
     this.maxDate = obj && obj.maxDate ? obj.maxDate : null;
     this.initialDate = obj && obj.initialDate ? obj.initialDate : null;
     this.firstWeekdaySunday = obj && obj.firstWeekdaySunday ? obj.firstWeekdaySunday : false;
-    this.format = obj && obj.format ? obj.format : 'YYYY-MM-DD';
+    this.formatOut = obj && obj.formatOut ? obj.formatOut : 'YYYY-MM-DD';
+    this.formatDisplay = obj && obj.formatDisplay ? obj.formatDisplay : this.formatOut;
     this.selectYearText = obj && obj.selectYearText ? obj.selectYearText : 'Select Year';
     this.todayText = obj && obj.todayText ? obj.todayText : 'Today';
     this.clearText = obj && obj.clearText ? obj.clearText : 'Clear';
@@ -141,6 +147,7 @@ export class NgxDatePickerComponent implements ControlValueAccessor, OnInit {
       month: null,
       year: null,
       formatted: null,
+      formattedToDisplay: null,
       date: null
     });
 
@@ -247,7 +254,8 @@ export class NgxDatePickerComponent implements ControlValueAccessor, OnInit {
             day: dateFns.format(date, 'DD'),
             month:  dateFns.format(date, 'MM'),
             year:  dateFns.format(date, 'YYYY'),
-            formatted:  dateFns.format(date, this.options.format),
+            formatted:  dateFns.format(date, this.options.formatOut),
+            formattedToDisplay:  dateFns.format(date, this.options.formatDisplay),
             date
           };
         }
@@ -309,7 +317,8 @@ export class NgxDatePickerComponent implements ControlValueAccessor, OnInit {
         day: dateFns.format(date, 'DD'),
         month:  dateFns.format(date, 'MM'),
         year:  dateFns.format(date, 'YYYY'),
-        formatted:  dateFns.format(date, this.options.format),
+        formatted:  dateFns.format(date, this.options.formatOut),
+        formattedToDisplay:  dateFns.format(date, this.options.formatDisplay),
         date
       };
       this.currentDate = date;
@@ -337,7 +346,8 @@ export class NgxDatePickerComponent implements ControlValueAccessor, OnInit {
         day: dateFns.format(date, 'DD'),
         month:  dateFns.format(date, 'MM'),
         year:  dateFns.format(date, 'YYYY'),
-        formatted:  dateFns.format(date, this.options.format),
+        formatted:  dateFns.format(date, this.options.formatOut),
+        formattedToDisplay:  dateFns.format(date, this.options.formatDisplay),
         date
       };
       this.currentDate = date;
@@ -361,7 +371,8 @@ export class NgxDatePickerComponent implements ControlValueAccessor, OnInit {
         day: dateFns.format(date, 'DD'),
         month:  dateFns.format(date, 'MM'),
         year:  dateFns.format(date, 'YYYY'),
-        formatted:  dateFns.format(date, this.options.format),
+        formatted:  dateFns.format(date, this.options.formatOut),
+        formattedToDisplay:  dateFns.format(date, this.options.formatDisplay),
         date
       };
       this.currentDate = date;
@@ -457,7 +468,7 @@ export class NgxDatePickerComponent implements ControlValueAccessor, OnInit {
   }
 
   clear() {
-    this.value = { day: null, month: null, year: null, date: null, formatted: null };
+    this.value = { day: null, month: null, year: null, date: null, formatted: null, formattedToDisplay: null };
     this.close();
   }
 }
