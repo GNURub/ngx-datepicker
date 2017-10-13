@@ -12,6 +12,7 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { SlimScrollOptions } from 'ng2-slimscroll';
 
 import * as dateFns from 'date-fns';
+import { locales } from './constants';
 
 export interface IDateModel {
   day: string;
@@ -53,7 +54,7 @@ export interface IDatePickerOptions {
   selectYearText?: string;
   todayText?: string;
   clearText?: string;
-  views?: Array<'day'| 'month'| 'year'>;
+  views?: Array<'day' | 'month' | 'year'>;
 }
 
 export class NgxDatePickerOptions {
@@ -69,7 +70,7 @@ export class NgxDatePickerOptions {
   selectYearText?: string;
   todayText?: string;
   clearText?: string;
-  views?: Array<'day'| 'month'| 'year'> = [];
+  views?: Array<'day' | 'month' | 'year'> = [];
 
   constructor(obj?: IDatePickerOptions) {
     this.autoApply = !!(obj && obj.autoApply === true);
@@ -120,7 +121,7 @@ export class NgxDatePickerComponent implements ControlValueAccessor, OnInit {
   @Output() outputEvents: EventEmitter<{ type: string, data: string | DateModel }>;
 
   date: DateModel;
-  view: 'day' | 'month' | 'year'= 'day';
+  view: 'day' | 'month' | 'year' = 'day';
 
   opened: boolean;
   currentDate: Date;
@@ -246,16 +247,16 @@ export class NgxDatePickerComponent implements ControlValueAccessor, OnInit {
           if (!(e.data instanceof Date)) {
             throw new Error(`Input data must be an instance of Date!`);
           }
-          const date: Date = new(e.data);
+          const date: Date = new (e.data);
           if (!date) {
             throw new Error(`Invalid date: ${e.data}`);
           }
           this.value = {
             day: dateFns.format(date, 'DD'),
-            month:  dateFns.format(date, 'MM'),
-            year:  dateFns.format(date, 'YYYY'),
-            formatted:  dateFns.format(date, this.options.formatOut),
-            formattedToDisplay:  dateFns.format(date, this.options.formatDisplay),
+            month: dateFns.format(date, 'MM'),
+            year: dateFns.format(date, 'YYYY'),
+            formatted: dateFns.format(date, this.options.formatOut),
+            formattedToDisplay: dateFns.format(date, this.options.formatDisplay),
             date
           };
         }
@@ -268,9 +269,9 @@ export class NgxDatePickerComponent implements ControlValueAccessor, OnInit {
     const month = dateFns.getMonth(date);
     const year = dateFns.getYear(date);
     let n = 1;
-    const firstWeekDay = (this.options.firstWeekdaySunday) ? dateFns.getDay(dateFns.setDay(date, 2)) : dateFns.getDay(dateFns.setDay(date, 1));
+    const firstWeekDay = (this.options.firstWeekdaySunday) ?
+      dateFns.getDay(dateFns.setDay(date, 2)) : dateFns.getDay(dateFns.setDay(date, 1));
 
-    console.log(firstWeekDay);
     if (firstWeekDay !== 1) {
       n -= (firstWeekDay + 6) % 7;
     }
@@ -285,7 +286,9 @@ export class NgxDatePickerComponent implements ControlValueAccessor, OnInit {
 
       if (this.minDate !== null) {
         if (this.maxDate !== null) {
-          betweenMinMax =  (dateFns.isEqual(currentDate, this.minDate) || dateFns.isAfter(currentDate, this.minDate)) && (dateFns.isEqual(currentDate, this.minDate) && dateFns.isBefore(currentDate, this.minDate));
+          betweenMinMax = (dateFns.isEqual(currentDate, this.minDate) ||
+            dateFns.isAfter(currentDate, this.minDate)) &&
+            (dateFns.isEqual(currentDate, this.minDate) && dateFns.isBefore(currentDate, this.minDate));
         } else {
           betweenMinMax = dateFns.isBefore(currentDate, this.minDate);
         }
@@ -315,16 +318,16 @@ export class NgxDatePickerComponent implements ControlValueAccessor, OnInit {
     setTimeout(() => {
       this.value = {
         day: dateFns.format(date, 'DD'),
-        month:  dateFns.format(date, 'MM'),
-        year:  dateFns.format(date, 'YYYY'),
-        formatted:  dateFns.format(date, this.options.formatOut),
-        formattedToDisplay:  dateFns.format(date, this.options.formatDisplay),
+        month: dateFns.format(date, 'MM'),
+        year: dateFns.format(date, 'YYYY'),
+        formatted: dateFns.format(date, this.options.formatOut),
+        formattedToDisplay: dateFns.format(date, this.options.formatDisplay),
         date
       };
       this.currentDate = date;
 
       if (this.options.views.length > 1) {
-        this.view = this.options.views[(this.options.views.indexOf('day') + 1 ) % this.options.views.length];
+        this.view = this.options.views[(this.options.views.indexOf('day') + 1) % this.options.views.length];
       } else {
         this.opened = false;
       }
@@ -344,16 +347,16 @@ export class NgxDatePickerComponent implements ControlValueAccessor, OnInit {
       const date: Date = dateFns.setMonth(this.currentDate, month);
       this.value = {
         day: dateFns.format(date, 'DD'),
-        month:  dateFns.format(date, 'MM'),
-        year:  dateFns.format(date, 'YYYY'),
-        formatted:  dateFns.format(date, this.options.formatOut),
-        formattedToDisplay:  dateFns.format(date, this.options.formatDisplay),
+        month: dateFns.format(date, 'MM'),
+        year: dateFns.format(date, 'YYYY'),
+        formatted: dateFns.format(date, this.options.formatOut),
+        formattedToDisplay: dateFns.format(date, this.options.formatDisplay),
         date
       };
       this.currentDate = date;
 
       if (this.options.views.length > 1 && 'month' !== this.options.views[this.options.views.length - 1]) {
-        this.view = this.options.views[(this.options.views.indexOf('month') + 1 ) % this.options.views.length];
+        this.view = this.options.views[(this.options.views.indexOf('month') + 1) % this.options.views.length];
       } else {
         this.opened = false;
       }
@@ -369,16 +372,16 @@ export class NgxDatePickerComponent implements ControlValueAccessor, OnInit {
       const date: Date = dateFns.setYear(this.currentDate, year);
       this.value = {
         day: dateFns.format(date, 'DD'),
-        month:  dateFns.format(date, 'MM'),
-        year:  dateFns.format(date, 'YYYY'),
-        formatted:  dateFns.format(date, this.options.formatOut),
-        formattedToDisplay:  dateFns.format(date, this.options.formatDisplay),
+        month: dateFns.format(date, 'MM'),
+        year: dateFns.format(date, 'YYYY'),
+        formatted: dateFns.format(date, this.options.formatOut),
+        formattedToDisplay: dateFns.format(date, this.options.formatDisplay),
         date
       };
       this.currentDate = date;
 
       if (this.options.views.length > 1 && 'year' !== this.options.views[this.options.views.length - 1]) {
-        this.view = this.options.views[(this.options.views.indexOf('year') + 1 ) % this.options.views.length];
+        this.view = this.options.views[(this.options.views.indexOf('year') + 1) % this.options.views.length];
       } else {
         this.opened = false;
       }
@@ -391,7 +394,8 @@ export class NgxDatePickerComponent implements ControlValueAccessor, OnInit {
     const date: Date = new Date();
 
     for (let i = 0; i < 12; i++) {
-      this.months.push(dateFns.format(dateFns.setMonth(date, i), "MMM"));
+      let month = dateFns.format(dateFns.setMonth(date, i), "MMM", { locale: locales[this.options.locale] });
+      this.months.push(month.charAt(0).toUpperCase() + month.slice(1));
     }
   }
 
