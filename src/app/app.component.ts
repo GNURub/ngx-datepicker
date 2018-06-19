@@ -15,7 +15,8 @@ export class AppComponent {
       views: ['month', 'year', 'day'],
       formatDisplay: 'MM/YYYY',
       locale: 'es',
-      firstWeekdaySunday: false
+      firstWeekdaySunday: false,
+      disablePassDate: true
     });
   }
 }
