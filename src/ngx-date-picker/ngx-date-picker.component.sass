@@ -184,7 +184,10 @@ $red: #fa5252
           text-align: center
           border-radius: 50%
           cursor: pointer
-          &:hover:not(.disabled), &.selected
+          &.disabled
+            border: none!important
+            cursor: not-allowed
+          &:hover, &.selected
             background: #222628
             border: 1px solid #366AAB
             border-radius: 4px
@@ -209,6 +212,9 @@ $red: #fa5252
           text-align: center
           border-radius: 50%
           cursor: pointer
+          &.disabled
+            border: none!important
+            cursor: not-allowed
           &:hover, &.selected
             background: #222628
             border: 1px solid #366AAB
@@ -231,10 +237,14 @@ $red: #fa5252
           text-align: center
           border-radius: 50%
           cursor: pointer
+          &.disabled
+            border: none!important
+            cursor: not-allowed
           &:hover, &.selected
             background: #222628
             border: 1px solid #366AAB
             border-radius: 4px
+            outline: none
 
 
       .datepicker-buttons

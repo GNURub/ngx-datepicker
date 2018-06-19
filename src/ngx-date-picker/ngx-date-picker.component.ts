@@ -8,11 +8,18 @@ import {
   Output,
   EventEmitter, ViewEncapsulation,
 } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { SlimScrollOptions } from 'ng2-slimscroll';
+
+import {
+  NG_VALUE_ACCESSOR,
+  ControlValueAccessor
+} from '@angular/forms';
+
+import {
+  SlimScrollOptions
+} from 'ng2-slimscroll';
 
 import * as dateFns from 'date-fns';
-import { locales } from './constants';
+import {locales} from './constants';
 
 export interface IDateModel {
   day: string;
@@ -54,6 +61,7 @@ export interface IDatePickerOptions {
   selectYearText?: string;
   todayText?: string;
   clearText?: string;
+  disablePassDate?: boolean;
   views?: Array<'day' | 'month' | 'year'>;
 }
 
@@ -70,6 +78,7 @@ export class NgxDatePickerOptions {
   selectYearText?: string;
   todayText?: string;
   clearText?: string;
+  disablePassDate?: boolean;
   views?: Array<'day' | 'month' | 'year'> = [];
 
   constructor(obj?: IDatePickerOptions) {
@@ -85,6 +94,7 @@ export class NgxDatePickerOptions {
     this.selectYearText = obj && obj.selectYearText ? obj.selectYearText : 'Select Year';
     this.todayText = obj && obj.todayText ? obj.todayText : 'Today';
     this.clearText = obj && obj.clearText ? obj.clearText : 'Clear';
+    this.disablePassDate = obj && !!obj.disablePassDate;
     this.views = obj && obj.views && Array.isArray(obj.views) && obj.views.length > 0 ? obj.views : ['day', 'month', 'year'];
   }
 }
@@ -133,10 +143,12 @@ export class NgxDatePickerComponent implements ControlValueAccessor, OnInit {
   minDate: Date | any;
   maxDate: Date | any;
 
-  private onTouchedCallback: () => void = () => { };
-  private onChangeCallback: (_: any) => void = () => { };
+  private onTouchedCallback: () => void = () => {
+  };
+  private onChangeCallback: (_: any) => void = () => {
+  };
 
-  constructor( @Inject(ElementRef) public el: ElementRef) {
+  constructor(@Inject(ElementRef) public el: ElementRef) {
     this.opened = false;
     this.currentDate = new Date();
     this.options = this.options || {};
@@ -176,7 +188,9 @@ export class NgxDatePickerComponent implements ControlValueAccessor, OnInit {
   }
 
   set value(date: DateModel) {
-    if (!date) { return; }
+    if (!date) {
+      return;
+    }
     this.date = date;
     this.onChangeCallback(date);
   }
@@ -193,7 +207,7 @@ export class NgxDatePickerComponent implements ControlValueAccessor, OnInit {
 
     if (this.options.initialDate instanceof Date) {
       this.currentDate = new Date(this.options.initialDate);
-      this.selectDate(null, this.currentDate);
+      this.selectDate(null, this.currentDate, false);
     }
 
     if (this.options.minDate instanceof Date) {
@@ -214,7 +228,7 @@ export class NgxDatePickerComponent implements ControlValueAccessor, OnInit {
     this.generateMonths();
 
     this.generateCalendar();
-    this.outputEvents.emit({ type: 'default', data: 'init' });
+    this.outputEvents.emit({type: 'default', data: 'init'});
 
     if (typeof window !== 'undefined') {
       const body = document.querySelector('body');
@@ -312,8 +326,28 @@ export class NgxDatePickerComponent implements ControlValueAccessor, OnInit {
     }
   }
 
-  selectDate(e: MouseEvent, date: Date) {
-    if (e) { e.preventDefault(); }
+  isDisabledDay(d) {
+    return this.getCurrentYear() >= this.getSelectedYear() &&
+      this.getCurrentMonth() >= this.getSelectedMonth() && this.getCurrentDay() > d;
+  }
+
+  isDisabledMonth(m) {
+    return this.getCurrentYear() >= this.getSelectedYear() &&
+      this.getCurrentMonth() > m;
+  }
+
+  isDisabledYear(y) {
+    return this.getCurrentYear() > y;
+  }
+
+  selectDate(e: MouseEvent, date: Date, isDisabled: boolean) {
+    if (e) {
+      e.preventDefault();
+    }
+
+    if (isDisabled && this.options.disablePassDate) {
+      return;
+    }
 
     setTimeout(() => {
       this.value = {
@@ -334,14 +368,43 @@ export class NgxDatePickerComponent implements ControlValueAccessor, OnInit {
 
       this.generateCalendar();
 
-      this.outputEvents.emit({ type: 'dateChanged', data: this.value });
+      this.outputEvents.emit({type: 'dateChanged', data: this.value});
     });
 
     this.opened = false;
   }
 
-  selectMonth(e: MouseEvent, month: number) {
+  getCurrentYear() {
+    return  dateFns.format(new Date(), 'YYYY');
+  }
+
+  getCurrentMonth() {
+    return  dateFns.format(new Date(), 'MM');
+  }
+
+
+  getCurrentDay() {
+    return  dateFns.format(new Date(), 'DD');
+  }
+
+  getSelectedYear() {
+    return  dateFns.format(this.currentDate, 'YYYY');
+  }
+
+  getSelectedMonth() {
+    return  dateFns.format(this.currentDate, 'MM');
+  }
+
+  getSelectedDay() {
+    return  dateFns.format(this.currentDate, 'DD');
+  }
+
+  selectMonth(e: MouseEvent, month: number, isDisabled: boolean) {
     e.preventDefault();
+
+    if (isDisabled && this.options.disablePassDate) {
+      return;
+    }
 
     setTimeout(() => {
       const date: Date = dateFns.setMonth(this.currentDate, month);
@@ -353,6 +416,7 @@ export class NgxDatePickerComponent implements ControlValueAccessor, OnInit {
         formattedToDisplay: dateFns.format(date, this.options.formatDisplay),
         date
       };
+
       this.currentDate = date;
 
       if (this.options.views.length > 1 && 'month' !== this.options.views[this.options.views.length - 1]) {
@@ -365,8 +429,12 @@ export class NgxDatePickerComponent implements ControlValueAccessor, OnInit {
     });
   }
 
-  selectYear(e: MouseEvent, year: number) {
+  selectYear(e: MouseEvent, year: number, isDisabled: boolean) {
     e.preventDefault();
+
+    if (isDisabled && this.options.disablePassDate) {
+      return;
+    }
 
     setTimeout(() => {
       const date: Date = dateFns.setYear(this.currentDate, year);
@@ -394,7 +462,7 @@ export class NgxDatePickerComponent implements ControlValueAccessor, OnInit {
     const date: Date = new Date();
 
     for (let i = 0; i < 12; i++) {
-      let month = dateFns.format(dateFns.setMonth(date, i), "MMM", { locale: locales[this.options.locale] });
+      let month = dateFns.format(dateFns.setMonth(date, i), "MMM", {locale: locales[this.options.locale]});
       this.months.push(month.charAt(0).toUpperCase() + month.slice(1));
     }
   }
@@ -411,7 +479,9 @@ export class NgxDatePickerComponent implements ControlValueAccessor, OnInit {
   }
 
   writeValue(date: DateModel) {
-    if (!date) { return; }
+    if (!date) {
+      return;
+    }
     this.date = date;
   }
 
@@ -435,7 +505,7 @@ export class NgxDatePickerComponent implements ControlValueAccessor, OnInit {
 
   today() {
     this.currentDate = new Date();
-    this.selectDate(null, this.currentDate);
+    this.selectDate(null, this.currentDate, false);
   }
 
   toggle() {
@@ -444,7 +514,7 @@ export class NgxDatePickerComponent implements ControlValueAccessor, OnInit {
       this.onOpen();
     }
 
-    this.outputEvents.emit({ type: 'default', data: 'opened' });
+    this.outputEvents.emit({type: 'default', data: 'opened'});
   }
 
   open() {
@@ -454,7 +524,7 @@ export class NgxDatePickerComponent implements ControlValueAccessor, OnInit {
 
   close() {
     this.opened = false;
-    this.outputEvents.emit({ type: 'default', data: 'closed' });
+    this.outputEvents.emit({type: 'default', data: 'closed'});
   }
 
   onOpen() {
@@ -472,7 +542,7 @@ export class NgxDatePickerComponent implements ControlValueAccessor, OnInit {
   }
 
   clear() {
-    this.value = { day: null, month: null, year: null, date: null, formatted: null, formattedToDisplay: null };
+    this.value = {day: null, month: null, year: null, date: null, formatted: null, formattedToDisplay: null};
     this.close();
   }
 }

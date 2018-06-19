@@ -53,8 +53,8 @@
           <span>S</span>
         </div>
         <div class="datepicker-calendar-days-container">
-          <span class="day" *ngFor="let d of days; let i = index"
-                            (click)="selectDate($event, d.date)"
+          <span class="day" [class.disabled]="isDisabledDay(d.day)"
+                *ngFor="let d of days; let i = index" (click)="selectDate($event, d.date, isDisabledDay(d.day))"
                             [ngClass]="{ 'disabled': !d.enabled, 'today': d.today, 'selected': d.selected }">
             {{ d.day }}
           </span>
@@ -66,14 +66,14 @@
       </div>
       <div *ngIf="view == 'month'">
         <div class="datepicker-calendar-months-container">
-          <span class="month" *ngFor="let m of months; let i = index" (click)="selectMonth($event, i)">
+          <span class="month" [class.disabled]="isDisabledMonth(i + 1)" *ngFor="let m of months; let i = index" (click)="selectMonth($event, i, isDisabledMonth(i + 1))">
             {{ m }}
           </span>
         </div>
       </div>
       <div *ngIf="view == 'year'">
         <div class="datepicker-calendar-years-container" slimScroll [options]="scrollOptions">
-          <span class="year" *ngFor="let y of years; let i = index" (click)="selectYear($event, y)">
+          <span class="year" [class.disabled]="isDisabledYear(y)" *ngFor="let y of years; let i = index" (click)="selectYear($event, y, isDisabledYear(y))">
             {{ y }}
           </span>
         </div>
