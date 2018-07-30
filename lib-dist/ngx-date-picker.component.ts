@@ -346,16 +346,16 @@ export class NgxDatePickerComponent implements ControlValueAccessor, OnInit {
 
   isDisabledDay(d) {
     return this.getCurrentYear() >= this.getSelectedYear() &&
-      this.getCurrentMonth() >= this.getSelectedMonth() && this.getCurrentDay() > d;
+      this.getCurrentMonth() >= this.getSelectedMonth() && this.getCurrentDay() > d  && this.options.disablePassDate;
   }
 
   isDisabledMonth(m) {
     return this.getCurrentYear() >= this.getSelectedYear() &&
-      this.getCurrentMonth() > m;
+      this.getCurrentMonth() > m  && this.options.disablePassDate;
   }
 
   isDisabledYear(y) {
-    return this.getCurrentYear() > y;
+    return this.getCurrentYear() > y && this.options.disablePassDate;
   }
 
   selectDate(e: MouseEvent, date: Date, isDisabled: boolean) {
