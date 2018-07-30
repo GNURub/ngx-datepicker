@@ -5,6 +5,7 @@ import { DateModel, NgxDatePickerOptions } from '../ngx-date-picker/ngx-date-pic
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
   date: DateModel;
@@ -15,7 +16,6 @@ export class AppComponent {
       views: ['month', 'year', 'day'],
       formatDisplay: 'MM/YYYY',
       locale: 'es',
-      firstWeekdaySunday: false,
       disablePassDate: true
     });
   }
