@@ -302,7 +302,6 @@ export class NgxDatePickerComponent implements ControlValueAccessor, OnInit {
     const selectedDate: Date = this.date.date;
 
 
-    console.log(dateFns.getDate(initDay));
     while (dateFns.isBefore(initDay, dateFns.endOfMonth(date))) {
       const currentDate: Date = initDay;
       const today: boolean = (dateFns.isSameDay(new Date(), currentDate) && dateFns.isSameMonth(new Date(), currentDate));
@@ -337,11 +336,7 @@ export class NgxDatePickerComponent implements ControlValueAccessor, OnInit {
       this.days.push(day);
 
       initDay = dateFns.addDays(initDay, 1);
-      // console.log(initDay)
     }
-    // for (let i = n; i <= dateFns.getDate(dateFns.endOfMonth(date)); i += 1) {
-    //
-    // }
   }
 
   isDisabledDay(d) {
