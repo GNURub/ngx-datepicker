@@ -5,13 +5,13 @@ import { SlimScrollModule } from 'ng2-slimscroll';
 import { NgxDatePickerComponent } from './ngx-date-picker.component';
 import { NgxFormatPipe } from "./ngx-format.pipe";
 export { NgxDatePickerOptions, DateModel } from './ngx-date-picker.component';
-var DatePickerModule = (function () {
-    function DatePickerModule() {
+var NgxDatePickerModule = (function () {
+    function NgxDatePickerModule() {
     }
-    return DatePickerModule;
+    return NgxDatePickerModule;
 }());
-export { DatePickerModule };
-DatePickerModule.decorators = [
+export { NgxDatePickerModule };
+NgxDatePickerModule.decorators = [
     { type: NgModule, args: [{
                 declarations: [
                     NgxDatePickerComponent,
@@ -30,5 +30,5 @@ DatePickerModule.decorators = [
             },] },
 ];
 /** @nocollapse */
-DatePickerModule.ctorParameters = function () { return []; };
+NgxDatePickerModule.ctorParameters = function () { return []; };
 //# sourceMappingURL=ngx-date-picker.module.js.map
