@@ -12,11 +12,12 @@ export class AppComponent {
   options: NgxDatePickerOptions;
 
   constructor() {
-    this.options = new NgxDatePickerOptions({
-      views: ['month', 'year', 'day'],
-      formatDisplay: 'MM/YYYY',
+    this.options =new NgxDatePickerOptions({
+      views: ['year', 'month', 'day'],
+      formatDisplay: 'YYYY/MM/DD',
+      maxDate: (new Date()),
       locale: 'es',
-      disablePassDate: true
+      disablePassDate: false
     });
   }
 }

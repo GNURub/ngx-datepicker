@@ -227,14 +227,14 @@ var NgxDatePickerComponent = (function () {
     };
     NgxDatePickerComponent.prototype.isDisabledDay = function (d) {
         return this.getCurrentYear() >= this.getSelectedYear() &&
-            this.getCurrentMonth() >= this.getSelectedMonth() && this.getCurrentDay() > d;
+            this.getCurrentMonth() >= this.getSelectedMonth() && this.getCurrentDay() > d && this.options.disablePassDate;
     };
     NgxDatePickerComponent.prototype.isDisabledMonth = function (m) {
         return this.getCurrentYear() >= this.getSelectedYear() &&
-            this.getCurrentMonth() > m;
+            this.getCurrentMonth() > m && this.options.disablePassDate;
     };
     NgxDatePickerComponent.prototype.isDisabledYear = function (y) {
-        return this.getCurrentYear() > y;
+        return this.getCurrentYear() > y && this.options.disablePassDate;
     };
     NgxDatePickerComponent.prototype.selectDate = function (e, date, isDisabled) {
         var _this = this;
@@ -395,15 +395,18 @@ var NgxDatePickerComponent = (function () {
     };
     NgxDatePickerComponent.prototype.openYearPicker = function () {
         var _this = this;
-        if (!('year' in this.options.views))
+        if (!this.isAllowedView('year'))
             return;
         setTimeout(function () { return _this.view = 'year'; });
     };
     NgxDatePickerComponent.prototype.openMonthPicker = function () {
         var _this = this;
-        if (!('month' in this.options.views))
+        if (!this.isAllowedView('month'))
             return;
         setTimeout(function () { return _this.view = 'month'; });
+    };
+    NgxDatePickerComponent.prototype.isAllowedView = function (view) {
+        return (this.options.views || []).indexOf(view);
     };
     NgxDatePickerComponent.prototype.clear = function () {
         this.value = { day: null, month: null, year: null, date: null, formatted: null, formattedToDisplay: null };

@@ -346,16 +346,16 @@ export class NgxDatePickerComponent implements ControlValueAccessor, OnInit {
 
   isDisabledDay(d) {
     return this.getCurrentYear() >= this.getSelectedYear() &&
-      this.getCurrentMonth() >= this.getSelectedMonth() && this.getCurrentDay() > d;
+      this.getCurrentMonth() >= this.getSelectedMonth() && this.getCurrentDay() > d  && this.options.disablePassDate;
   }
 
   isDisabledMonth(m) {
     return this.getCurrentYear() >= this.getSelectedYear() &&
-      this.getCurrentMonth() > m;
+      this.getCurrentMonth() > m  && this.options.disablePassDate;
   }
 
   isDisabledYear(y) {
-    return this.getCurrentYear() > y;
+    return this.getCurrentYear() > y && this.options.disablePassDate;
   }
 
   selectDate(e: MouseEvent, date: Date, isDisabled: boolean) {
@@ -550,13 +550,17 @@ export class NgxDatePickerComponent implements ControlValueAccessor, OnInit {
   }
 
   openYearPicker() {
-    if (!('year' in this.options.views)) return;
+    if (!this.isAllowedView('year')) return;
     setTimeout(() => this.view = 'year');
   }
 
   openMonthPicker() {
-    if (!('month' in this.options.views)) return;
+    if (!this.isAllowedView('month')) return;
     setTimeout(() => this.view = 'month');
+  }
+
+  private isAllowedView(view) {
+    return (this.options.views || []).indexOf(view);
   }
 
   clear() {
