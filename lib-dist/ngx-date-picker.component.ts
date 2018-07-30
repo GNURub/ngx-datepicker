@@ -550,13 +550,17 @@ export class NgxDatePickerComponent implements ControlValueAccessor, OnInit {
   }
 
   openYearPicker() {
-    if (!('year' in this.options.views)) return;
+    if (!this.isAllowedView('year')) return;
     setTimeout(() => this.view = 'year');
   }
 
   openMonthPicker() {
-    if (!('month' in this.options.views)) return;
+    if (!this.isAllowedView('month')) return;
     setTimeout(() => this.view = 'month');
+  }
+
+  private isAllowedView(view) {
+    return (this.options.views || []).indexOf(view);
   }
 
   clear() {
