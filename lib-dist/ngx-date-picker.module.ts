@@ -24,4 +24,4 @@ export { NgxDatePickerOptions, DateModel } from './ngx-date-picker.component';
     FormsModule
   ]
 })
-export class NgxDatePickerModule { }
+export class DatePickerModule { }
