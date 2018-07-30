@@ -1,2 +1,5 @@
-*.ts
-!*.d.ts
+dist-app/
+node_modules/
+.DS_Store
+src/
+e2e/
