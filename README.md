@@ -1,11 +1,11 @@
 # ngx-date-picker
-Angular2 Datepicker Component
+Angular Datepicker Component
 
-***ngx-date-picker*** is a date-picker component for Angular2.
+***ngx-date-picker*** is a date-picker component for Angular
 
 ## Demo
 
-[https://gnurub.github.io/ngx-date-picker/](https://gnurub.github.io/ngx-date-picker/)
+[https://gnurub.github.io/ngx-datepicker/](https://gnurub.github.io/ngx-datepicker/)
 
 Looking for a date range picker? Check this one: [https://gnurub.github.io/ngx-daterangepicker/](https://gnurub.github.io/ngx-daterangepicker/)
 
@@ -14,25 +14,25 @@ Looking for a date range picker? Check this one: [https://gnurub.github.io/ngx-d
 Install ngx-date-picker via `npm`
 
 ````shell
-npm install ngx-date-picker --save
+npm install ngx-date-picker-fns --save
 ````
 
 ## Integration
 
 ```ts
 // app.module.ts
-import { DatePickerModule } from 'ngx-date-picker';
+import { NgxDatePickerModule } from 'ngx-date-picker-fns';
 
 @NgModule({
   ...
-  imports: [ DatePickerModule ]
+  imports: [ NgxDatePickerModule ]
   ...
 })
 export class AppModule { }
 
 // app.component.ts
 import { Component } from '@angular/core';
-import { DatePickerOptions, DateModel } from 'ngx-date-picker';
+import { NgxDatePickerOptions, DateModel } from 'ngx-date-picker-fns';
 
 @Component({
   selector: 'app-root',
@@ -40,10 +40,10 @@ import { DatePickerOptions, DateModel } from 'ngx-date-picker';
 })
 export class AppComponent {
   date: DateModel;
-  options: DatePickerOptions;
+  options: NgxDatePickerOptions;
 
   constructor() {
-    this.options = new DatePickerOptions();
+    this.options = new NgxDatePickerOptions();
   }
 }
 
@@ -56,8 +56,8 @@ For more info about options please see [this](https://github.com/GNURub/ngx-date
 ## Run Included Demo
 
 ```shell
-git clone https://github.com/GNURub/ngx-date-picker.git --depth 1
-cd ngx-date-picker
+git clone https://github.com/GNURub/ngx-datepicker.git --depth 1
+cd ngx-datepicker
 npm install
 npm start
 ```
