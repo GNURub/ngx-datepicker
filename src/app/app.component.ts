@@ -18,6 +18,6 @@ export class AppComponent {
       maxDate: (new Date()),
       locale: 'es',
       disablePassDate: false
-    });
+    });selectorWithMore
   }
 }
