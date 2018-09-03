@@ -186,7 +186,6 @@ var NgxDatePickerComponent = (function () {
         var initDay = dateFns.startOfWeek(dateFns.startOfMonth(date), { weekStartsOn: this.options.firstCalendarDay });
         this.days = [];
         var selectedDate = this.date.date;
-        console.log(dateFns.getDate(initDay));
         while (dateFns.isBefore(initDay, dateFns.endOfMonth(date))) {
             var currentDate = initDay;
             var today = (dateFns.isSameDay(new Date(), currentDate) && dateFns.isSameMonth(new Date(), currentDate));
@@ -219,11 +218,7 @@ var NgxDatePickerComponent = (function () {
             };
             this.days.push(day);
             initDay = dateFns.addDays(initDay, 1);
-            // console.log(initDay)
         }
-        // for (let i = n; i <= dateFns.getDate(dateFns.endOfMonth(date)); i += 1) {
-        //
-        // }
     };
     NgxDatePickerComponent.prototype.isDisabledDay = function (d) {
         return this.getCurrentYear() >= this.getSelectedYear() &&
