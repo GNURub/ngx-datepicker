@@ -14,12 +14,9 @@ import {
   ControlValueAccessor
 } from '@angular/forms';
 
-import {
-  SlimScrollOptions
-} from 'ng2-slimscroll';
-
 import * as dateFns from 'date-fns';
 import {locales} from './constants';
+import {ISlimScrollOptions} from 'ngx-slimscroll';
 
 export interface IDateModel {
   day: string;
@@ -141,7 +138,7 @@ export class NgxDatePickerComponent implements ControlValueAccessor, OnInit {
   days: CalendarDate[];
   years: number[];
   months: string[];
-  scrollOptions: SlimScrollOptions;
+  scrollOptions: ISlimScrollOptions;
 
   minDate: Date | any;
   maxDate: Date | any;

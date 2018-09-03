@@ -1,7 +1,7 @@
 import { Pipe } from '@angular/core';
 import * as dateFns from 'date-fns';
 import { locales } from './constants';
-var NgxFormatPipe = (function () {
+var NgxFormatPipe = /** @class */ (function () {
     function NgxFormatPipe() {
     }
     NgxFormatPipe.prototype.transform = function (value) {
@@ -15,14 +15,14 @@ var NgxFormatPipe = (function () {
         }
         return dateFns.format(value, args[0] || "DD/MM/YYYY", options);
     };
+    NgxFormatPipe.decorators = [
+        { type: Pipe, args: [{
+                    name: 'ngxFormat'
+                },] },
+    ];
+    /** @nocollapse */
+    NgxFormatPipe.ctorParameters = function () { return []; };
     return NgxFormatPipe;
 }());
 export { NgxFormatPipe };
-NgxFormatPipe.decorators = [
-    { type: Pipe, args: [{
-                name: 'ngxFormat'
-            },] },
-];
-/** @nocollapse */
-NgxFormatPipe.ctorParameters = function () { return []; };
 //# sourceMappingURL=ngx-format.pipe.js.map
